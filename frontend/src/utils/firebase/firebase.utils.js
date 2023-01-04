@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   signInWithPopup,
@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from "firebase/auth";
+} from 'firebase/auth';
 import {
   getFirestore,
   doc,
@@ -17,15 +17,15 @@ import {
   writeBatch,
   query,
   getDocs,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCzbbZvotHbMPtJz524-Ej87Uq9cY9gWPE",
-  authDomain: "crwn-clothing-db-40284.firebaseapp.com",
-  projectId: "crwn-clothing-db-40284",
-  storageBucket: "crwn-clothing-db-40284.appspot.com",
-  messagingSenderId: "3743530477",
-  appId: "1:3743530477:web:1cda6567ab1d031743fbe4",
+  apiKey: 'AIzaSyCzbbZvotHbMPtJz524-Ej87Uq9cY9gWPE',
+  authDomain: 'crwn-clothing-db-40284.firebaseapp.com',
+  projectId: 'crwn-clothing-db-40284',
+  storageBucket: 'crwn-clothing-db-40284.appspot.com',
+  messagingSenderId: '3743530477',
+  appId: '1:3743530477:web:1cda6567ab1d031743fbe4',
 };
 
 // Initialize Firebase
@@ -34,12 +34,12 @@ initializeApp(firebaseConfig);
 const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
-  prompt: "select_account",
+  prompt: 'select_account',
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () =>
-  signInWithPopup(auth, googleProvider);
+export const signInWithGooglePopup = async () =>
+  await signInWithPopup(auth, googleProvider);
 
 export const db = getFirestore();
 
@@ -55,11 +55,11 @@ export const addCollectionAndDocuments = async (
     batch.set(docRef, object);
   });
   await batch.commit();
-  console.log("done");
+  console.log('done');
 };
 
 export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, "categories");
+  const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
   const querySnapshot = await getDocs(q);
 
@@ -77,7 +77,7 @@ export const createUserDocumentFromAuth = async (
 ) => {
   if (!userAuth) return;
 
-  const userDocRef = doc(db, "users", userAuth.uid);
+  const userDocRef = doc(db, 'users', userAuth.uid);
 
   const userSnapshot = await getDoc(userDocRef);
   if (!userSnapshot.exists()) {
@@ -91,7 +91,7 @@ export const createUserDocumentFromAuth = async (
         ...additionalInformation,
       });
     } catch (error) {
-      console.log("error creating the user", error.message);
+      console.log('error creating the user', error.message);
     }
   }
 
